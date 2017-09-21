@@ -5,21 +5,6 @@ import json
 from util.MysqlUtil import MysqlUtil
 
 app = Flask(__name__)
-
-tasks = [
-    {
-        'id': 1,
-        'title': u'Buy groceries',
-        'description': u'Milk, Cheese, Pizza, Fruit, Tylenol',
-        'done': False
-    },
-    {
-        'id': 2,
-        'title': u'Learn Python',
-        'description': u'Need to find a good Python tutorial on the web',
-        'done': False
-    }
-]
 ip = "localhost"
 user = "root"
 pwd = ""
@@ -29,10 +14,13 @@ conn = ""
 mysqlUtil = MysqlUtil(ip, user, pwd, database, table, conn)
 
 
-@app.route('/')
-def hello_world():
-    # return 'Hello World!'
-    return jsonify({'tasks': tasks})
+@app.route('/momApp/person/detail')
+def get_person_detail():
+    id_p = request.args.get('id')
+    person = personDao.get_person(id_p)
+    response = make_response(jsonify(person=person))
+    response.headers['Access-Control-Allow-Origin'] = '*'
+    return response
 
 
 @app.route('/momApp/persons')
