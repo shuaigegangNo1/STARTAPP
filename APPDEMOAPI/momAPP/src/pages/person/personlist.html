@@ -1,0 +1,47 @@
+<ion-header>
+  <ion-navbar color="default">
+    <ion-title>人员列表</ion-title>
+  </ion-navbar>
+</ion-header>
+<!--<ion-header >
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>任务列表</ion-title>
+  </ion-navbar>
+  <div padding>
+    <ion-segment [(ngModel)]="TaskName">
+      <ion-segment-button value="MyTasks">
+        我的任务
+      </ion-segment-button>
+      <ion-segment-button value="TotalTasks">
+        全部任务
+      </ion-segment-button>
+    </ion-segment>
+  </div>
+</ion-header>-->
+<ion-content>
+  <ion-searchbar (ionInput)="searchTasks($event)"  placeholder="搜索人员"></ion-searchbar>
+  <div [ngSwitch]="TaskName">
+    <div *ngSwitchCase="'MyTasks'">
+
+      <ion-list>
+        <button ion-item *ngFor="let person of personList" (click)="goToTaskDetail(person)">
+          {{ person[0] }}
+          <p>责任人：{{person[1]}}</p>
+        </button>
+      </ion-list>
+    </div>
+  </div>
+<!--    <div *ngSwitchCase="'TotalTasks'">
+      <ion-list>
+        <button ion-item *ngFor="let task of totalTasks" (click)="goToTaskDetail(task)">
+          {{ task.name }}
+          <p>责任人：{{task.person}}</p>
+        </button>
+      </ion-list>
+    </div>
+  </div>-->
+</ion-content>
+
