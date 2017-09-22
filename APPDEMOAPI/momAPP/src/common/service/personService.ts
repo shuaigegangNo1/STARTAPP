@@ -14,12 +14,21 @@ export class PersonService extends BaseService{
   }
 
   getServiceUrl(){
-  return 'http://0.0.0.0:5000';
-}
+    //return 'http://0.0.0.0:5000';
+    //   return 'http://192.168.0.102:5000'
+    return 'http://192.168.2.141:5000'
+  }
   getPersonList() {
     return this.http.get(this.getServiceUrl() + '/momApp/persons').map(res => res.json()).catch(this.handleError);
   }
   createPerson(person: person) {
     return this.http.post(this.getServiceUrl()+'/momApp/addPerson',JSON.stringify(person)).map(res => res.json()).catch(this.handleError);
+  }
+
+  getPersonDetail(id: string) {
+    return this.http.get(this.getServiceUrl()+'/momApp/person/detail?id='+id).map(res => res.json()).catch(this.handleError);
+  }
+  updatePerson() {
+
   }
 }

@@ -4,6 +4,7 @@
 import {Component} from "@angular/core";
 import {AlertController, NavController} from "ionic-angular";
 import {PersonService} from "../../common/service/personService";
+import {PersonComponent} from "./person"
 @Component({
   selector: 'app-person-list',
   templateUrl: 'personlist.html'
@@ -25,22 +26,21 @@ export class PersonList {
   //   this.initGetTaskList();
   // }
 
-  goToTaskDetail(item) {
-    const task = {
-      name: item.name,
-      person: item.person
+  goToTaskDetail(person) {
+    const item = {
+      id: person[0],
     };
-    // this.navCtrl.push(TaskPage, {
-    //   task: task
-    // });
+    this.navCtrl.push(PersonComponent, {
+      person: item
+    });
   }
 
   initGetTaskList() {
     // this.totalTasks = this.taskService.getTaskList();
-     this.personService.getPersonList().subscribe(res =>
-       // console.log(">>>>data>>>>", this.personList = res.person)
-       this.personList = res.person
-     );
+    this.personService.getPersonList().subscribe(res =>{
+      console.log(">>>>data>>>>", this.personList = res.person)
+      this.personList = res.person}
+    );
   }
 
   searchTasks(ev: any) {

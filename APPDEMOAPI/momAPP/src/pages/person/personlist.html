@@ -1,5 +1,8 @@
 <ion-header>
-  <ion-navbar color="default">
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
     <ion-title>人员列表</ion-title>
   </ion-navbar>
 </ion-header>
@@ -26,22 +29,30 @@
   <div [ngSwitch]="TaskName">
     <div *ngSwitchCase="'MyTasks'">
 
+      <!--      <ion-list>
+              <button ion-item *ngFor="let person of personList" (click)="goToTaskDetail(person)">
+                {{ person[0] }}
+                <p>责任人：{{person[1]}}</p>
+              </button>
+            </ion-list>-->
       <ion-list>
         <button ion-item *ngFor="let person of personList" (click)="goToTaskDetail(person)">
-          {{ person[0] }}
-          <p>责任人：{{person[1]}}</p>
+          {{person[1]}}
+          <div class="item-note" item-right>
+            {{person[5]}}
+          </div>
         </button>
       </ion-list>
     </div>
   </div>
-<!--    <div *ngSwitchCase="'TotalTasks'">
-      <ion-list>
-        <button ion-item *ngFor="let task of totalTasks" (click)="goToTaskDetail(task)">
-          {{ task.name }}
-          <p>责任人：{{task.person}}</p>
-        </button>
-      </ion-list>
-    </div>
-  </div>-->
+  <!--    <div *ngSwitchCase="'TotalTasks'">
+        <ion-list>
+          <button ion-item *ngFor="let task of totalTasks" (click)="goToTaskDetail(task)">
+            {{ task.name }}
+            <p>责任人：{{task.person}}</p>
+          </button>
+        </ion-list>
+      </div>
+    </div>-->
 </ion-content>
 
