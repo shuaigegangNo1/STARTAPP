@@ -10,56 +10,44 @@ import {PersonList} from "./personlist";
   selector: 'app-person',
   templateUrl: 'person.html'
 })
-export class PersonComponent{
-  id: string;
-  firstname: string;
-  lastname: string;
-  telephone: string;
-  address: string;
-  city: string;
-  person =new person();
+export class PersonComponent {
+  person = new person();
   personId: string;
-  personInfo: any = [];
-  buttonName: string = '添加';
+  showDelete = false;
   constructor(public navCtrl: NavController, public alertCtrl: AlertController,
-              private personService: PersonService, private navParams:NavParams){
-    if(this.navParams.get('person')) {
+              private personService: PersonService, private navParams: NavParams) {
+    if (this.navParams.get('person')) {
       this.personId = this.navParams.get('person').id;
       this.getPersonDetail();
-      this.buttonName = '修改';
+      this.showDelete = true;
     }
-
   }
-  addPerson() {
-    this.person.id = this.id;
-    this.person.firstname = this.firstname;
-    this.person.lastname = this.lastname;
-    this.person.telephone = this.telephone;
-    this.person.city = this.city;
-    this.person.address= this.address;
-    this.person.create_date = '2017-09-26';
-    this.personService.createPerson(this.person).subscribe(res => {
-        console.log(">>>>data>>>",res);
+
+  savePerson() {
+    if (this.personId) {
+      this.personService.updatePerson(this.person).subscribe(res => {
+        console.log(">>>>data>>>", res);
+        this.navCtrl.push(PersonList);
+      });
+    } else {
+      this.person.create_date = '2017-09-26';
+      this.personService.createPerson(this.person).subscribe(res => {
+          console.log(">>>>data>>>", res);
+          this.navCtrl.push(PersonList);
+        }
+      );
+    }
+  }
+
+  getPersonDetail() {
+    this.personService.getPersonDetail(this.personId).subscribe(res => {
+      this.person = res.result;
+    })
+  }
+  deletePerson() {
+    this.personService.deletePerson(this.person.id).subscribe(res => {
         this.navCtrl.push(PersonList);
       }
-    )
-    // let NewPerson = {
-    //   id: this.id,
-    //
-    // }
-  }
-  getPersonDetail() {
-    this.personService.getPersonDetail(this.personId).subscribe(res =>
-    {
-      this.personInfo = res.person;
-      this.id = this.personInfo[0][0];
-      this.lastname = this.personInfo[0][1];
-      this.firstname = this.personInfo[0][2];
-      this.city = this.personInfo[0][3];
-      this.address = this.personInfo[0][4];
-      this.telephone = this.personInfo[0][6];
-      console.log(">>>>res",this.personInfo[0][1])
-
-    })
+    );
   }
 }

@@ -20,12 +20,12 @@ if __name__ == "__main__":
     # rows = mysqlUtil.mysql_query(sql)
     now = datetime.datetime.now()
     # datas = ['12', 'han', 'li', 'china', '盐城', str(now.strftime("%Y-%m-%d %H:%M:%S"))]
-    person_dic = {'id': '15', 'first_name': 'xin', 'last_name': 'su', 'address': 'china', 'city': 'suzhou',
-                  'telephone': '13424566', 'create_date': '2017-09-20'}
-    persons = [person_dic['id'], person_dic['first_name'], person_dic['last_name'], person_dic['address'],
-               person_dic['city'],
-               person_dic['create_date'], person_dic['telephone']]
-    mysqlUtil.mysql_insert_common(persons)
+    # person_dic = {'id': '15', 'first_name': 'xin', 'last_name': 'su', 'address': 'china', 'city': 'suzhou',
+    #               'telephone': '13424566', 'create_date': '2017-09-20'}
+    # persons = [person_dic['id'], person_dic['first_name'], person_dic['last_name'], person_dic['address'],
+    #            person_dic['city'],
+    #            person_dic['create_date'], person_dic['telephone']]
+    # mysqlUtil.mysql_insert_common(persons)
 
     # mysqlUtil.mysql_delete('2')
     # mysqlUtil.mysql_update('city', 'tijian', 'id_p', '6')
@@ -45,6 +45,13 @@ if __name__ == "__main__":
     # cursor.execute("SELECT * from persons")
     # data = cursor.fetchone()
     # print(data)
-    persons = get_person_list()
-    for person in persons:
-        print(person[0])
+    # persons = get_person_list()
+    # for person in persons:
+    #     print(person[0])
+    # parmas = ["shiguo", "xu", "china", "changzhou", "13262722816", "3"]
+    # res = mysqlUtil.mysql_update_person(parmas)
+    # print("res>>>", res)
+    # rows66 =get_person_list();
+    # print(rows66[0])
+    res = mysqlUtil.mysql_delete("7s")
+    print(res)

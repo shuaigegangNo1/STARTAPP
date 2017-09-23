@@ -38,8 +38,8 @@ export class PersonList {
   initGetTaskList() {
     // this.totalTasks = this.taskService.getTaskList();
     this.personService.getPersonList().subscribe(res =>{
-      console.log(">>>>data>>>>", this.personList = res.person)
-      this.personList = res.person}
+      console.log(">>>>data>>>>", this.personList = res.result)
+      this.personList = res.result}
     );
   }
 
