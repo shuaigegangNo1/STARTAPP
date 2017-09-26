@@ -24,3 +24,16 @@ $ ionic cordova run ios
 
 Substitute ios for android if not on a Mac.
 
+Command: ionic cordova emulate android -lcs
+
+```bash
+ionic cordova build android # debug version
+
+ionic cordova build -- release android
+```
+
+# list android devices
+adb devices
+
+# run android in emulate
+Ionic cordova run android
