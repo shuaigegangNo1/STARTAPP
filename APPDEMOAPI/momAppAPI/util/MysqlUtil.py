@@ -23,7 +23,6 @@ class MysqlUtil(object):
             sql = "select * from " + self.table + " limit 10"
             self.cursor.execute(sql)
             rows = self.cursor.fetchall()
-            # print(rows)
         except:
             print(sql + "query failed")
         return rows
@@ -57,7 +56,7 @@ class MysqlUtil(object):
             self.conn.commit()
             print(sql + "insert succeed")
         except:
-            self.conn.commit()
+            self.conn.rollback()
             print(sql + "insert failed")
 
     def mysql_insert_common(self, data_items=[]):
@@ -77,7 +76,7 @@ class MysqlUtil(object):
             self.conn.commit()
             print(sql + " insert succeed")
         except:
-            self.conn.commit()
+            self.conn.rollback()
             result = False
             print(sql + " insert failed")
         return result
@@ -89,7 +88,7 @@ class MysqlUtil(object):
             self.conn.commit()
             print(sql + " delete succeed")
         except:
-            self.conn.commit()
+            self.conn.rollback()
             result = 0
             print(sql + " delete failed")
         return result
@@ -102,7 +101,7 @@ class MysqlUtil(object):
             self.conn.commit()
             print(sql + " update succeed")
         except:
-            self.conn.commit()
+            self.conn.rollback()
             print(sql + " update failed")
 
     def mysql_update_common(self, sql):
@@ -112,7 +111,7 @@ class MysqlUtil(object):
             result = True
             print(sql + " update succeed")
         except:
-            self.conn.commit()
+            self.conn.rollback()
             result = False
             print(sql + " update failed")
         return result
@@ -129,9 +128,20 @@ class MysqlUtil(object):
             self.conn.commit()
             print(sql + " update succeed")
         except:
-            self.conn.commit()
+            self.conn.rollback()
             print(sql + " update failed")
         return result
+
+    def mysql_query_like(self, column1, arg0, start, pagesize):
+        try:
+            sql = "SELECT * FROM " + self.table + " WHERE " + column1 + " like " + "'%" + arg0 + "%'" + " limit " + \
+                  start + "," +pagesize
+            self.cursor.execute(sql)
+            rows = self.cursor.fetchall()
+            print(sql + " query like succeed")
+        except:
+            print(sql + " query like failed")
+        return rows
 
     def mysql_close(self):
         self.cursor.close()

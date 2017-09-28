@@ -1,14 +1,15 @@
 from flask import Flask, jsonify, make_response, request
 import dao.PersonsDao as personDao
+from model.person import Person
 import json
 
 app = Flask(__name__)
 
 
 def get_response(result):
-    # response.headers['Access-Control-Allow-Methods'] = 'POST'
-    # response.headers['Access-Control-Allow-Headers'] = 'x-requested-with,content-type'
     response = make_response(jsonify(result=result))
+    # response.headers['Access-Control-Allow-Headers'] = 'x-requested-with,content-type'
+    # response.headers['Access-Control-Allow-Methods'] = 'POST'
     response.headers['Access-Control-Allow-Origin'] = '*'
     return response
 
@@ -21,11 +22,17 @@ def get_person_detail():
     return response
 
 
-@app.route('/momApp/persons')
+@app.route('/momApp/persons', methods=['GET', 'POST'])
 def get_person_list():
-    persons = personDao.get_person_list()
-    response = get_response(persons)
-    return response
+    if request.method == 'POST':
+        data = request.data
+        pageInfo = json.loads(data)
+        # persons = personDao.get_person_list(pageInfo['start'], pageInfo['pagesize'])
+        persons = personDao.get_person_list_like(pageInfo['searchName'], pageInfo['start'], pageInfo['pagesize'])
+        person_model = Person()
+        persons_json_array = person_model.get_persons_json_array(persons)
+        response = get_response(persons_json_array)
+        return response
 
 
 @app.route('/momApp/addPerson', methods=['GET', 'POST'])

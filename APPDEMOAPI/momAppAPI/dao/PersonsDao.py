@@ -19,9 +19,9 @@ def close_connect_mysql(mysql_util):
     mysql_util.mysql_close()
 
 
-def get_person_list():
+def get_person_list(start, pagesize):
     mysql_util = open_connect_mysql()
-    sql = "select id_p,firstname,lastname,address,city,telephone from Persons"
+    sql = "select id_p,firstname,lastname,address,city,telephone from Persons limit " + start + "," + pagesize
     rows = mysql_util.mysql_query(sql)
     close_connect_mysql(mysql_util)
     return rows
@@ -41,5 +41,12 @@ def update_person(update_person, id_p):
     sql = "update Persons set "
     sql += "where id_p = " + "'" + id_p + "'"
     result = mysql_util.mysql_update_common(sql)
+    close_connect_mysql(mysql_util)
+    return result
+
+
+def get_person_list_like(param, start, pagesize):
+    mysql_util = open_connect_mysql()
+    result = mysql_util.mysql_query_like('firstname', param, start, pagesize)
     close_connect_mysql(mysql_util)
     return result
