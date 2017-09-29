@@ -37,3 +37,6 @@ adb devices
 
 # run android in emulate
 Ionic cordova run android
+
+# build android and sign it
+refer to http://blog.csdn.net/liujiawei00/article/details/74356356
